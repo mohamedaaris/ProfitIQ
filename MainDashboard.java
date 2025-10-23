@@ -1,9 +1,12 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.border.AbstractBorder;
+import java.util.HashMap;
+import java.util.Map;
+import java.awt.image.BufferedImage;
 
 public class MainDashboard extends JFrame {
     private String currentUser;
@@ -15,6 +18,8 @@ public class MainDashboard extends JFrame {
     private JPanel summaryPanel;
     private JPanel sidebar;
     private JLabel welcomeLabel;
+    private JToggleButton darkModeToggle;
+    private Map<String, JPanel> statCards = new HashMap<>();
 
     public MainDashboard(String username) {
         this.currentUser = username;
@@ -33,6 +38,73 @@ public class MainDashboard extends JFrame {
         collegePanel = new CollegeAnalyticsPanel();
         researchPanel = new ResearchAnalyticsPanel();
         summaryPanel = new SummaryPanel();
+        
+        // Create stat cards for dashboard
+        createStatCards();
+    }
+
+    private void createStatCards() {
+        // Create stat cards similar to the image with modern styling
+        statCards.put("totalOrders", createStatCard("Total Orders", "75", "📦", ProfitIQ.PRIMARY_COLOR));
+        statCards.put("totalDelivered", createStatCard("Total Delivered", "75", "🚚", ProfitIQ.SECONDARY_COLOR));
+        statCards.put("totalRevenue", createStatCard("Total Revenue", "$75", "💰", ProfitIQ.SUCCESS_COLOR));
+        statCards.put("totalCanceled", createStatCard("Total Canceled", "75", "❌", ProfitIQ.DANGER_COLOR));
+    }
+
+    private JPanel createStatCard(String title, String value, String icon, Color accentColor) {
+        JPanel card = new JPanel(new BorderLayout(10, 5));
+        card.setBackground(ProfitIQ.CARD_DARK);
+        card.setBorder(new RoundedBorder(accentColor, 10));
+        card.setPreferredSize(new Dimension(220, 120));
+        
+        // Icon panel with accent color
+        JPanel iconPanel = new JPanel(new BorderLayout());
+        iconPanel.setBackground(accentColor);
+        iconPanel.setPreferredSize(new Dimension(50, 50));
+        iconPanel.setBorder(new RoundedBorder(accentColor, 8));
+        
+        JLabel iconLabel = new JLabel(icon);
+        iconLabel.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+        iconLabel.setForeground(Color.WHITE);
+        iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        iconPanel.add(iconLabel, BorderLayout.CENTER);
+        
+        // Value and title
+        JLabel valueLabel = new JLabel(value);
+        valueLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        valueLabel.setForeground(ProfitIQ.TEXT_LIGHT);
+        
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        titleLabel.setForeground(new Color(148, 163, 184)); // Slate 400
+        
+        // Add components to card
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(ProfitIQ.CARD_DARK);
+        contentPanel.add(valueLabel);
+        contentPanel.add(Box.createVerticalStrut(5));
+        contentPanel.add(titleLabel);
+        
+        card.add(iconPanel, BorderLayout.WEST);
+        card.add(contentPanel, BorderLayout.CENTER);
+        
+        // Add hover effect
+        card.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                card.setBackground(new Color(51, 65, 85)); // Slightly lighter on hover
+                contentPanel.setBackground(new Color(51, 65, 85));
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                card.setBackground(ProfitIQ.CARD_DARK);
+                contentPanel.setBackground(ProfitIQ.CARD_DARK);
+            }
+        });
+        
+        return card;
     }
 
     private void setupLayout() {
@@ -49,7 +121,8 @@ public class MainDashboard extends JFrame {
         add(topPanel, BorderLayout.NORTH);
 
         // Add main panels to card layout with styling
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(ProfitIQ.BACKGROUND_DARK);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainPanel.add(businessPanel, "Business");
         mainPanel.add(collegePanel, "College");
         mainPanel.add(researchPanel, "Research");
@@ -64,9 +137,99 @@ public class MainDashboard extends JFrame {
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setPreferredSize(new Dimension(220, getHeight()));
-        sidebar.setBackground(new Color(15, 23, 42)); // Dark blue background
-        sidebar.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        sidebar.setPreferredSize(new Dimension(250, getHeight()));
+        sidebar.setBackground(ProfitIQ.BACKGROUND_DARK);
+        sidebar.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 15));
+
+        // App logo/title
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        logoPanel.setBackground(ProfitIQ.BACKGROUND_DARK);
+        logoPanel.setMaximumSize(new Dimension(250, 60));
+        
+        JLabel logoLabel = new JLabel("Horror");
+        logoLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        logoLabel.setForeground(new Color(14, 165, 233)); // Sky blue
+        
+        logoPanel.add(logoLabel);
+        sidebar.add(logoPanel);
+        sidebar.add(Box.createVerticalStrut(10));
+        
+        // User profile section
+        JPanel profilePanel = new JPanel();
+        profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+        profilePanel.setBackground(ProfitIQ.BACKGROUND_DARK);
+        profilePanel.setMaximumSize(new Dimension(250, 100));
+        profilePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        // Create circular avatar
+        JPanel avatarPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                int size = Math.min(getWidth(), getHeight()) - 4;
+                int x = (getWidth() - size) / 2;
+                int y = (getHeight() - size) / 2;
+                
+                g2d.setColor(new Color(100, 116, 139)); // Slate 500
+                g2d.fillOval(x, y, size, size);
+                
+                g2d.setColor(Color.WHITE);
+                g2d.setFont(new Font("Segoe UI", Font.BOLD, 18));
+                FontMetrics fm = g2d.getFontMetrics();
+                String initials = currentUser.substring(0, 1).toUpperCase();
+                int textWidth = fm.stringWidth(initials);
+                int textHeight = fm.getHeight();
+                g2d.drawString(initials, x + (size - textWidth) / 2, y + (size + textHeight) / 2 - fm.getDescent());
+                
+                g2d.dispose();
+            }
+            
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(50, 50);
+            }
+        };
+        avatarPanel.setOpaque(false);
+        
+        JPanel avatarContainer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        avatarContainer.setBackground(ProfitIQ.BACKGROUND_DARK);
+        avatarContainer.add(avatarPanel);
+        
+        JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setLayout(new BoxLayout(userInfoPanel, BoxLayout.Y_AXIS));
+        userInfoPanel.setBackground(ProfitIQ.BACKGROUND_DARK);
+        userInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        JLabel nameLabel = new JLabel(currentUser);
+        nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        nameLabel.setForeground(Color.WHITE);
+        nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        JLabel roleLabel = new JLabel("Modern Admin Dashboard");
+        roleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        roleLabel.setForeground(new Color(148, 163, 184)); // Slate 400
+        roleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        userInfoPanel.add(nameLabel);
+        userInfoPanel.add(roleLabel);
+        
+        avatarContainer.add(userInfoPanel);
+        profilePanel.add(avatarContainer);
+        
+        sidebar.add(profilePanel);
+        sidebar.add(Box.createVerticalStrut(20));
+        
+        // Navigation section title
+        JLabel navLabel = new JLabel("Dashboard");
+        navLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        navLabel.setForeground(new Color(148, 163, 184)); // Slate 400
+        navLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        navLabel.setBorder(new EmptyBorder(5, 15, 5, 15));
+        sidebar.add(navLabel);
+        sidebar.add(Box.createVerticalStrut(10));
 
         // Navigation buttons with enhanced styling
         SidebarButton businessBtn = new SidebarButton("Business Analytics", "📊");
@@ -76,13 +239,12 @@ public class MainDashboard extends JFrame {
         SidebarButton logoutBtn = new SidebarButton("Logout", "🚪");
 
         // Add buttons to sidebar
-        sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(businessBtn);
-        sidebar.add(Box.createVerticalStrut(10));
+        sidebar.add(Box.createVerticalStrut(5));
         sidebar.add(collegeBtn);
-        sidebar.add(Box.createVerticalStrut(10));
+        sidebar.add(Box.createVerticalStrut(5));
         sidebar.add(researchBtn);
-        sidebar.add(Box.createVerticalStrut(10));
+        sidebar.add(Box.createVerticalStrut(5));
         sidebar.add(summaryBtn);
         sidebar.add(Box.createVerticalStrut(30));
         sidebar.add(Box.createVerticalGlue());
@@ -110,6 +272,9 @@ public class MainDashboard extends JFrame {
         });
         
         logoutBtn.addActionListener(e -> handleLogout());
+        
+        // Set business button as active by default
+        businessBtn.setActive(true);
 
         return sidebar;
     }
@@ -127,22 +292,98 @@ public class MainDashboard extends JFrame {
 
     private JPanel createTopPanel() {
         JPanel topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(new Color(30, 41, 59)); // Slightly lighter blue
+        topPanel.setBackground(ProfitIQ.CARD_DARK);
         topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         
-        welcomeLabel = new JLabel("Welcome, " + currentUser + "!", JLabel.LEFT);
-        welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        // Left side - welcome message
+        welcomeLabel = new JLabel("Dashboard", JLabel.LEFT);
+        welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
         welcomeLabel.setForeground(Color.WHITE);
+        
+        JLabel subtitleLabel = new JLabel("Hi Zack, Welcome back to Profit Admin!");
+        subtitleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        subtitleLabel.setForeground(new Color(148, 163, 184)); // Slate 400
+        
+        JPanel leftPanel = new JPanel();
+        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+        leftPanel.setBackground(ProfitIQ.CARD_DARK);
+        leftPanel.add(welcomeLabel);
+        leftPanel.add(subtitleLabel);
+        
+        // Right side - search and controls
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.setBackground(ProfitIQ.CARD_DARK);
+        
+        // Search field with rounded corners
+        JTextField searchField = new JTextField(15);
+        searchField.setBorder(new RoundedBorder(new Color(51, 65, 85), 8));
+        searchField.setBackground(new Color(51, 65, 85));
+        searchField.setForeground(Color.WHITE);
+        searchField.setCaretColor(Color.WHITE);
+        
+        // Dark mode toggle
+        darkModeToggle = new JToggleButton();
+        darkModeToggle.setIcon(createIcon("🌙", 16));
+        darkModeToggle.setSelectedIcon(createIcon("☀️", 16));
+        darkModeToggle.setBackground(ProfitIQ.CARD_DARK);
+        darkModeToggle.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        darkModeToggle.setFocusPainted(false);
+        darkModeToggle.setSelected(ProfitIQ.isDarkMode());
+        darkModeToggle.addActionListener(e -> ProfitIQ.toggleTheme());
+        
+        // Notification icon
+        JButton notificationBtn = createIconButton("🔔");
+        
+        // User profile icon
+        JButton profileBtn = createIconButton("👤");
+        
+        // Settings icon
+        JButton settingsBtn = createIconButton("⚙️");
+        
+        rightPanel.add(searchField);
+        rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(darkModeToggle);
+        rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(notificationBtn);
+        rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(profileBtn);
+        rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(settingsBtn);
         
         // Add a subtle shadow effect
         topPanel.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(71, 85, 105)),
+            BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(51, 65, 85)),
             topPanel.getBorder()
         ));
         
-        topPanel.add(welcomeLabel, BorderLayout.WEST);
+        topPanel.add(leftPanel, BorderLayout.WEST);
+        topPanel.add(rightPanel, BorderLayout.EAST);
         
         return topPanel;
+    }
+    
+    private JButton createIconButton(String iconText) {
+        JButton button = new JButton(iconText);
+        button.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        button.setBackground(ProfitIQ.CARD_DARK);
+        button.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return button;
+    }
+    
+    private Icon createIcon(String text, int size) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Segoe UI", Font.PLAIN, size));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.CENTER);
+        
+        BufferedImage image = new BufferedImage(size + 8, size + 8, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = image.createGraphics();
+        label.paint(g2d);
+        g2d.dispose();
+        
+        return new ImageIcon(image);
     }
 
     private void setupEventHandlers() {
