@@ -1,0 +1,310 @@
+/* Modern Chart Styling for ProfitIQ Dashboard */
+
+/* Base Chart Styles */
+.chart {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.chart-title {
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* Axis Styling */
+.axis {
+    -fx-tick-label-fill: #94a3b8;
+    -fx-tick-label-font-size: 12px;
+}
+
+.axis-label {
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Bar Chart Styles */
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.chart-bar {
+    -fx-bar-fill: #3b82f6;
+    -fx-background-radius: 4px;
+}
+
+.chart-bar:hover {
+    -fx-bar-fill: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 10, 0, 0, 2);
+}
+
+/* Line Chart Styles */
+.chart-line-symbol {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 8px;
+    -fx-pref-height: 8px;
+}
+
+.chart-series-line {
+    -fx-stroke: #3b82f6;
+    -fx-stroke-width: 3px;
+}
+
+.chart-series-line:hover {
+    -fx-stroke: #2563eb;
+    -fx-stroke-width: 4px;
+}
+
+/* Area Chart Styles */
+.chart-area-symbol {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 50%;
+}
+
+.chart-area-line {
+    -fx-stroke: #3b82f6;
+    -fx-stroke-width: 2px;
+}
+
+.chart-area-fill {
+    -fx-fill: linear-gradient(to bottom, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.1));
+}
+
+/* Pie Chart Styles */
+.chart-pie-label {
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.chart-pie-label-line {
+    -fx-stroke: #94a3b8;
+    -fx-stroke-width: 1px;
+}
+
+/* Scatter Chart Styles */
+.chart-symbol {
+    -fx-background-color: #3b82f6;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 6px;
+    -fx-pref-height: 6px;
+}
+
+.chart-symbol:hover {
+    -fx-background-color: #2563eb;
+    -fx-pref-width: 10px;
+    -fx-pref-height: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.5), 8, 0, 0, 0);
+}
+
+/* Legend Styles */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 12px;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 3px;
+}
+
+/* Tooltip Styles */
+.chart-tooltip {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+    -fx-border-color: #334155;
+    -fx-border-width: 1px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 12px;
+    -fx-padding: 8 12;
+}
+
+/* Grid Lines */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #334155;
+    -fx-stroke-width: 0.5px;
+    -fx-opacity: 0.3;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #334155;
+    -fx-stroke-width: 0.5px;
+    -fx-opacity: 0.3;
+}
+
+/* Zero Line */
+.chart-horizontal-zero-line {
+    -fx-stroke: #64748b;
+    -fx-stroke-width: 1px;
+}
+
+.chart-vertical-zero-line {
+    -fx-stroke: #64748b;
+    -fx-stroke-width: 1px;
+}
+
+/* Animation Effects */
+.chart-animated {
+    -fx-animation-duration: 0.5s;
+}
+
+/* Custom Chart Components */
+.gauge-chart {
+    -fx-background-color: transparent;
+}
+
+.progress-chart {
+    -fx-background-color: transparent;
+}
+
+.heatmap-chart {
+    -fx-background-color: transparent;
+}
+
+/* Chart Container Styles */
+.chart-container {
+    -fx-background-color: #1e293b;
+    -fx-border-color: #334155;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 15px;
+}
+
+.chart-container:hover {
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.2), 10, 0, 0, 2);
+}
+
+/* Responsive Chart Styles */
+@media (max-width: 768px) {
+    .chart-title {
+        -fx-font-size: 14px;
+    }
+    
+    .axis-label {
+        -fx-font-size: 12px;
+    }
+    
+    .chart-pie-label {
+        -fx-font-size: 10px;
+    }
+}
+
+/* Dark Mode Specific Adjustments */
+.dark-mode .chart {
+    -fx-background-color: #0a0a0a;
+}
+
+.dark-mode .chart-container {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #2a2a2a;
+}
+
+/* Loading States */
+.chart-loading {
+    -fx-opacity: 0.5;
+}
+
+.chart-loading .chart {
+    -fx-background-color: linear-gradient(45deg, transparent 25%, rgba(59, 130, 246, 0.1) 25%, rgba(59, 130, 246, 0.1) 50%, transparent 50%, transparent 75%, rgba(59, 130, 246, 0.1) 75%);
+    -fx-background-size: 20px 20px;
+    -fx-animation: loading-stripes 1s linear infinite;
+}
+
+@keyframes loading-stripes {
+    0% {
+        -fx-background-position: 0 0;
+    }
+    100% {
+        -fx-background-position: 20px 0;
+    }
+}
+
+/* Error States */
+.chart-error {
+    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-border-color: #ef4444;
+    -fx-border-width: 2px;
+}
+
+.chart-error .chart {
+    -fx-opacity: 0.3;
+}
+
+/* Success States */
+.chart-success {
+    -fx-background-color: rgba(34, 197, 94, 0.1);
+    -fx-border-color: #22c55e;
+    -fx-border-width: 2px;
+}
+
+/* Interactive Elements */
+.chart-interactive {
+    -fx-cursor: hand;
+}
+
+.chart-interactive:hover {
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.3), 15, 0, 0, 3);
+}
+
+/* Custom Chart Types */
+.trend-chart {
+    -fx-chart-series-line: #0ea5e9;
+}
+
+.revenue-chart {
+    -fx-chart-series-line: #22c55e;
+}
+
+.profit-chart {
+    -fx-chart-series-line: #eab308;
+}
+
+.growth-chart {
+    -fx-chart-series-line: #8b5cf6;
+}
+
+/* Chart Data Point Styles */
+.data-point-high {
+    -fx-background-color: #22c55e;
+    -fx-effect: dropshadow(gaussian, rgba(34, 197, 94, 0.5), 8, 0, 0, 0);
+}
+
+.data-point-medium {
+    -fx-background-color: #eab308;
+    -fx-effect: dropshadow(gaussian, rgba(234, 179, 8, 0.5), 8, 0, 0, 0);
+}
+
+.data-point-low {
+    -fx-background-color: #ef4444;
+    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.5), 8, 0, 0, 0);
+}
+
+/* Chart Selection Styles */
+.chart-selected {
+    -fx-border-color: #3b82f6;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.4), 15, 0, 0, 3);
+}
+
+.chart-selected .chart {
+    -fx-opacity: 1.0;
+}
+
+/* Chart Export Styles */
+.chart-export-ready {
+    -fx-background-color: rgba(34, 197, 94, 0.1);
+    -fx-border-color: #22c55e;
+    -fx-border-width: 1px;
+    -fx-border-style: dashed;
+}
+
+

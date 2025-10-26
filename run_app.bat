@@ -1,16 +1,20 @@
 @echo off
-echo ProfitIQ Application Launcher
-echo =============================
+echo Starting ProfitIQ Swing Application...
 
-set /p pg_password="Enter your PostgreSQL password: "
-set PROFITIQ_DB_PASSWORD=%pg_password%
-
-echo Starting ProfitIQ application...
-java -cp ".;lib/*" ProfitIQ
+REM Compile Swing files with libraries from lib folder
+echo Compiling Swing files...
+javac -cp ".;lib/*" -d . *.java swing/ui/*.java swing/model/*.java swing/util/*.java
 
 if %errorlevel% neq 0 (
-    echo.
-    echo Application exited with error code %errorlevel%
+    echo Compilation failed!
+    pause
+    exit /b %errorlevel%
 )
+
+echo Compilation successful!
+
+REM Run Swing application with libraries from lib folder
+echo Starting Swing application...
+java -cp ".;lib/*" ProfitIQ
 
 pause

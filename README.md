@@ -1,165 +1,99 @@
-# ProfitIQ: Unified Business, Placement, and Research Analytics Platform
+# ProfitIQ Analytics Platform
 
-ProfitIQ is a comprehensive analytics platform that combines company profit & growth analytics, college placement evaluations, and research citation tracking into one intelligent dashboard.
+ProfitIQ is a comprehensive analytics platform that provides business intelligence, college placement analytics, and research paper analysis. The platform is available in both Swing and JavaFX versions.
 
-## 🚀 Features
-
-- **🔐 Authentication System**: Secure signup and login with password hashing
-- **🧮 Business Analytics**: Track company revenue, profit, and growth metrics
-- **🎓 College Placement Analytics**: Monitor placement rates, salaries, and recruiter data
-- **📚 Research Analytics**: Track research paper citations and impact
-- **📈 Unified Dashboard**: Combined view of all analytics with scoring system
-- **📊 Interactive Charts**: Visualize data with JFreeChart
-- **💾 PostgreSQL Backend**: Robust data storage and management
-- **🎨 Modern UI**: FlatLaf dark theme for elegant user experience
-
-## 🛠️ Technical Requirements
-
-- **Java JDK 21+**
-- **PostgreSQL 15+**
-- **Libraries** (place in `lib` directory):
-  - `jfreechart.jar` - Chart generation
-  - `flatlaf.jar` - Modern UI theme
-  - `postgresql-connector.jar` - Database connectivity
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 ProfitIQ/
-├── lib/                       # Third-party JAR files
-├── ProfitIQ.java              # Main application entry point
-├── DatabaseConnection.java    # Database connection utility
-├── LoginFrame.java            # Login interface
-├── SignupFrame.java           # User registration interface
-├── MainDashboard.java         # Main application dashboard
-├── BusinessAnalyticsPanel.java# Business analytics module
-├── CollegeAnalyticsPanel.java # College placement analytics module
-├── ResearchAnalyticsPanel.java# Research citation tracking module
-├── SummaryPanel.java          # Unified dashboard summary
-├── Company.java               # Company data model
-├── College.java               # College data model
-├── ResearchPaper.java         # Research paper data model
-├── CompanyTableModel.java     # Table model for companies
-├── CollegeTableModel.java     # Table model for colleges
-├── ResearchTableModel.java    # Table model for research papers
-├── database_setup.sql         # Database initialization script
-├── build.bat                  # Build script for Windows
-├── run.bat                    # Run script for Windows
-├── TestDatabaseConnection.java# Database connection test utility
-├── README.md                  # This file
-└── LICENSE                    # License information
+├── swing/                 # Swing implementation
+│   ├── ui/                # User interface components
+│   ├── model/             # Data models
+│   └── util/              # Utility classes
+├── javafx/                # JavaFX implementation
+│   ├── ui/
+│   │   └── controllers/   # FXML controllers
+│   ├── model/             # Data models
+│   ├── util/              # Utility classes
+│   ├── css/               # CSS styling files
+│   └── fxml/              # FXML layout files
+├── fxml/                  # Shared FXML files
+├── css/                   # Shared CSS files
+└── lib/                   # External libraries (JavaFX, JFreeChart, etc.)
 ```
 
-## 🛠️ Setup Instructions
+## Features
 
-### 1. Database Setup
+- **Business Analytics**: Track company revenue, profit, and growth metrics
+- **College Placement Analytics**: Monitor college placement rates, salaries, and recruiter information
+- **Research Analytics**: Analyze research paper citations and impact scores
+- **Dashboard**: Unified dashboard with interactive charts and data visualization
+- **Real-time Data**: Simulated real-time data updates
+- **Responsive UI**: Modern, responsive user interface with dark theme
 
-1. Install PostgreSQL 15+ on your system
-2. Create a new database:
-   ```sql
-   CREATE DATABASE profitiq;
-   ```
-3. Connect to the database and run the `database_setup.sql` script:
-   ```bash
-   psql -U postgres -d profitiq -f database_setup.sql
-   ```
+## Running the Application
 
-### 2. Configure Database Connection
+### Option 1: Using Build Scripts
 
-Update the database connection details in `DatabaseConnection.java` if needed:
-```java
-private static final String URL = "jdbc:postgresql://localhost:5432/profitiq";
-private static final String USER = "postgres";
-private static final String PASSWORD = "postgres"; // Change to your PostgreSQL password
-```
+Double-click on `build_and_run.bat` to compile and run the application. You'll be prompted to choose between Swing and JavaFX versions.
 
-### 3. Add JAR Dependencies
+### Option 2: Running Specific Versions
 
-Download the required JAR files and place them in the `lib` directory:
-- `jfreechart.jar`
-- `flatlaf.jar`
-- `postgresql-connector.jar`
+- **Swing version**: Double-click `run_app.bat`
+- **JavaFX version**: Double-click `run_javafx.bat`
 
-### 4. Compile and Run
+### Option 3: Manual Compilation and Execution
 
-On Windows, you can use the provided scripts:
-
-**Build the application:**
 ```bash
-build.bat
-```
+# Compile all files with libraries from lib folder
+javac -cp ".;lib/*" -d . *.java swing/ui/*.java swing/model/*.java swing/util/*.java javafx/ui/controllers/*.java javafx/model/*.java javafx/util/*.java
 
-**Run the application:**
-```bash
-run.bat
-```
-
-Or compile and run manually:
-
-Compile all Java files:
-```bash
-javac -cp ".;lib/*" *.java
-```
-
-Run the application:
-```bash
+# Run Swing version
 java -cp ".;lib/*" ProfitIQ
+
+# Run JavaFX version
+java -cp ".;lib/*" --module-path "lib" --add-modules javafx.controls,javafx.fxml ProfitIQFX
 ```
 
-## 🎯 Usage
+## Key Components
 
-1. **Sign Up**: Create a new account with username, email, and password
-2. **Log In**: Access your personalized dashboard
-3. **Navigate Modules**: Use the sidebar to switch between:
-   - Business Analytics
-   - College Placement Analytics
-   - Research Analytics
-   - Summary Dashboard
-4. **Add Data**: Use the "+ Add Data" button on each tab to input new records
-5. **View Analytics**: See real-time charts and ranked data
-6. **Export Reports**: Generate summary reports (future feature)
+### Swing Version
+- `ProfitIQ.java`: Main application class
+- `LoginFrame.java`: Login screen
+- `SignupFrame.java`: User registration screen
+- `MainDashboard.java`: Main dashboard with navigation
 
-## 📊 Analytics Scoring System
+### JavaFX Version
+- `ProfitIQFX.java`: Main application class
+- `JavaFXLauncher.java`: Alternative launcher
+- `LoginController.java`: Login screen controller
+- `SignupController.java`: Signup screen controller
+- `MainDashboardController.java`: Main dashboard controller
 
-### Business Score
-```
-Company Score = (profit / revenue) × growth_percent
-```
+## Styling
 
-### College Score
-```
-Placement Score = (placement_rate × avg_salary) / 100
-```
+Both versions use a modern dark theme with:
+- Blue accent colors
+- Smooth animations and transitions
+- Responsive layouts
+- Custom-styled components
 
-### Research Score
-```
-Research Score = citations / (currentYear - year + 1)
-```
+The JavaFX version uses CSS for styling, while the Swing version uses custom painting and styling.
 
-## 🌟 Future Enhancements
+## Data Model
 
-- AI-Powered Predictions for trend analysis
-- Cloud Integration for remote data storage
-- CSV Import/Export functionality
-- Real-Time Sync with automatic refresh
-- User Roles & Access Levels
-- Enhanced Visual Dashboard with animations
-- Notifications & Insights Panel
+The application uses three primary data models:
+- `Company`: Business analytics data
+- `College`: College placement data
+- `ResearchPaper`: Research publication data
 
-## 🤝 Contributing
+Each model includes metrics for analysis and scoring algorithms to rank entities.
 
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+## Requirements
 
-## 📄 License
+- Java 8 or higher
+- Libraries in the `lib` folder (JavaFX, JFreeChart, etc.)
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Development
 
-## 🙏 Acknowledgments
-
-- [JFreeChart](https://www.jfree.org/jfreechart/) for charting capabilities
-- [FlatLaf](https://github.com/JFormDesigner/FlatLaf) for the modern UI theme
-- [PostgreSQL](https://www.postgresql.org/) for the database backend
+The project is organized to allow easy maintenance of both Swing and JavaFX versions. Shared components are in the root directory, while version-specific components are in their respective directories.

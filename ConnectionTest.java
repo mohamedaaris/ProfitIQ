@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 public class ConnectionTest {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/profitiq";
+        String url = "jdbc:postgresql://localhost:5433/profitiq";
         String user = "postgres";
         String password = "profitiq123"; // Updated password
         

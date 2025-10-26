@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafx.ui.controllers.LoginController" style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0f172a, #1e293b);">
+   <children>
+      <!-- Header -->
+      <Label text="ProfitIQ Analytics" textAlignment="CENTER" textFill="#60a5fa">
+         <font>
+            <Font name="Segoe UI Bold" size="28.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </Label>
+      
+      <Label text="Unified Business, Placement, and Research Analytics" textAlignment="CENTER" textFill="#9ca3af">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="30.0" />
+         </VBox.margin>
+      </Label>
+      
+      <!-- Login Form Container -->
+      <VBox alignment="CENTER" style="-fx-background-color: rgba(30, 41, 59, 0.8); -fx-background-radius: 20;">
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" top="30.0" bottom="30.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+         
+         <!-- Username Field -->
+         <Label text="Username:" textFill="WHITE">
+            <font>
+               <Font name="Segoe UI" size="14.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="5.0" top="15.0" />
+            </VBox.margin>
+         </Label>
+         
+         <TextField fx:id="usernameField" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <font>
+               <Font name="Segoe UI" size="14.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="15.0" />
+            </VBox.margin>
+         </TextField>
+         
+         <!-- Password Field -->
+         <Label text="Password:" textFill="WHITE">
+            <font>
+               <Font name="Segoe UI" size="14.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="5.0" />
+            </VBox.margin>
+         </Label>
+         
+         <PasswordField fx:id="passwordField" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: #334155; -fx-text-fill: white; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <font>
+               <Font name="Segoe UI" size="14.0" />
+            </font>
+            <VBox.margin>
+               <Insets bottom="20.0" />
+            </VBox.margin>
+         </PasswordField>
+         
+         <!-- Buttons -->
+         <HBox alignment="CENTER" spacing="20.0">
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
+            
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 8;" text="Login">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Button>
+            
+            <Button fx:id="signupButton" mnemonicParsing="false" onAction="#handleSignup" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #22c55e; -fx-text-fill: white; -fx-background-radius: 8;" text="Create Account">
+               <font>
+                  <Font name="Segoe UI Bold" size="14.0" />
+               </font>
+            </Button>
+         </HBox>
+      </VBox>
+      
+      <!-- Footer -->
+      <Label text="© 2025 ProfitIQ Analytics. All rights reserved." textAlignment="CENTER" textFill="#9ca3af">
+         <font>
+            <Font name="Segoe UI" size="10.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>
